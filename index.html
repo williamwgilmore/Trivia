@@ -77,6 +77,8 @@
 			var wrong3 = 0;
 			var answerSelect = true;
 			var gameStart = true;
+			var rightSound = new Audio('assets/sounds/right.mp3');
+			var wrongSound = new Audio('assets/sounds/wrong.mp3');
 			
 			var pick = false;
 			var hold = [0];
@@ -195,6 +197,7 @@
 
 			var outOfTime = function(){
 				$('.result').html("You ran out of time. The correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				wrongSound.play();
 				startTimerReset();
 			}
 
@@ -270,8 +273,10 @@
 				if (correct==='.answer1'){
 					$('.result').html("Correct!");
 					score++;
+					rightSound.play();
 				} else {
 					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+					wrongSound.play();
 				}
 				clearInterval(timer);
 				startTimerReset();
@@ -285,8 +290,10 @@
 				if (correct==='.answer2'){
 					$('.result').html("Correct!");
 					score++;
+					rightSound.play();
 				} else {
 					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+					wrongSound.play();
 				}
 				clearInterval(timer);
 				startTimerReset();
@@ -300,8 +307,10 @@
 				if (correct==='.answer3'){
 					$('.result').html("Correct!");
 					score++;
+					rightSound.play();
 				} else {
 					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+					wrongSound.play();
 				}
 				clearInterval(timer);
 				startTimerReset();
@@ -315,8 +324,10 @@
 				if (correct==='.answer4'){
 					$('.result').html("Correct!");
 					score++;
+					rightSound.play();
 				} else {
 					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+					wrongSound.play();
 				}
 				clearInterval(timer);
 				startTimerReset();
