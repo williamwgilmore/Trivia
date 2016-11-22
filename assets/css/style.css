@@ -1,10 +1,16 @@
 body {
 	background: url('../images/pentagon.png');
 	font-family: 'Merriweather', serif;
+	color: #938f61;
 }
 
 .jumbotron {
 	background-color: transparent;
 	font-style: bold;
 	color: darkgreen;
+	
+}
+
+.answer {
+	color: black;
 }
