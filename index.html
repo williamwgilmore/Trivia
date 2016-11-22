@@ -1,0 +1,337 @@
+<DOCTYPE html>
+<html>
+	<head>
+		<!-- Adding Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Adding jQuery -->
+		<script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+		<!-- css link -->
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<!-- font link -->
+		<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+	</head>
+	<body>
+		<div class = 'container'>
+			<div class = 'row'>
+				<div class = 'jumbotron text-center'>
+					<h1 class = 'head'>Trivia Game</h1>
+				</div>
+			</div>
+			<div class = 'row'>
+				<div class = 'col-md-12'>
+					<h2 class = 'question text-center'>
+						Click anywhere to begin
+					</h2>
+				</div>
+			</div>
+			<div class = 'row'>
+				<div class = 'col-md-12 text-center'>
+					<h2 class ='theTime'>
+						15
+					</h2>
+				</div>
+			</div>
+			<div class = 'row answer'>
+				<div class = 'col-md-12 text-center'>
+					<h3 class = 'answer1'>
+						
+					</h3>
+				</div>
+				<div class = 'col-md-12 text-center'>
+					<h3 class = 'answer2'>
+						
+					</h3>
+				</div>
+				<div class = 'col-md-12 text-center'>
+					<h3 class = 'answer3'>
+						
+					</h3>
+				</div>
+				<div class = 'col-md-12 text-center'>
+					<h3 class = 'answer4'>
+						
+					</h3>
+				</div>
+				<div class = 'col-md-12'>
+					<h3 class = 'result text-center'>
+						
+					</h3>
+				</div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript">
+			var timer=0;
+			var timer2=0;
+			var timer3=0;
+			var timeLeft=0;
+			var randomNumber=0;
+			var currentQuestion=0;
+			var score = 0;
+			var correct = 0;
+			var wrong1 = 0;
+			var wrong2 = 0;
+			var wrong3 = 0;
+			var answerSelect = true;
+			var gameStart = true;
+			
+			var pick = false;
+			var hold = [0];
+			var options = ['.answer1','.answer2','.answer3','.answer4'];
+
+			var question1 = {
+				q: "What is the fastest fish in the ocean?",
+				c: "Sailfish",
+				a2: "Wahoo",
+				a3: "Tarpon",
+				a4: "Swordfish"
+			};
+
+			var question2 = {
+				q: "What is the largest dinosaur?",
+				c: "Argentinosaurus",
+				a2: "Spinosaurus",
+				a3: "Stegosaurus",
+				a4: "Triceratops"
+			};
+
+			var question3 = {
+				q: "Which is the highest waterfall?",
+				c: "Victoria Falls",
+				a2: "Niagara Falls",
+				a3: "Inga Falls",
+				a4: "Wagenia"
+			};
+
+			var question4 = {
+				q: "What whale can dive the deepest?",
+				c: "Sperm whale",
+				a2: "Beaked whale",
+				a3: "Blue whale",
+				a4: "Humpback whale"
+			};
+
+			var question5 = {
+				q: "What is the heaviest land mammal?",
+				c: "African elephant",
+				a2: "White rhinoceros",
+				a3: "Hippopotamus",
+				a4: "Giraffe"
+			};
+
+			var question6 = {
+				q: "What is the loudest animal?",
+				c: "Blue whale",
+				a2: "Howler monkey",
+				a3: "African elephant",
+				a4: "Snapping shrimp"
+			};
+
+			var question7 = {
+				q: "What is the heaviest bird?",
+				c: "Ostrich",
+				a2: "Wandering albatross",
+				a3: "Andean condor",
+				a4: "Southern Cassowary"
+			};
+
+			var question8 = {
+				q: "What animal can live the longest?",
+				c: "Immortal Jellyfish",
+				a2: "Macaw",
+				a3: "African elephant",
+				a4: "Galapagos giant tortise"
+			};
+
+			var question9 = {
+				q: "Which animal can survive the longest without food?",
+				c: "Olm",
+				a2: "Crocodile",
+				a3: "Lungfish",
+				a4: "Emperor penguin"
+			};
+
+			var question10 = {
+				q: "Which animal cannot survive freezing?",
+				c: "Arctic puffin",
+				a2: "Painted turtle hatchlings",
+				a3: "Arctic ground squirrels",
+				a4: "Arctic wolly bear moth caterpillar"
+			};
+
+			randomNumber = Math.floor(Math.random()*4)
+
+			var randomQuestion = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10];
+
+			//order of functions 
+			//startGame -- startTimer (countDown) -- outOfTime/answer (countDowntoReset) 
+
+
+			//start game
+			//fill in question and answers, start timer
+
+			var startGame = function(){
+				$('.result').html("");
+				startTimer();
+				nextQuestion();
+			}
+
+			var startTimer = function(){
+				timeLeft = 16;
+				timer = setInterval(countDown, 1000);
+			}
+
+			var countDown = function(){
+				timeLeft--;
+				$('.theTime').html(timeLeft);
+				if (timeLeft === 0){
+					clearInterval(timer);
+					outOfTime();
+				}
+			}
+
+			var outOfTime = function(){
+				$('.result').html("You ran out of time. The correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				startTimerReset();
+			}
+
+			var startTimerReset = function(){
+				timeLeft = 3;
+				timer2 = setInterval(countDowntoReset, 1000);
+			}
+
+			var countDowntoReset = function(){
+				timeLeft--;
+				$('.theTime').html(timeLeft);
+				if (timeLeft === 0 && currentQuestion < 10){
+					clearInterval(timer2);
+					startGame();
+				} else if (timeLeft === 0 && currentQuestion === 10) {
+					clearInterval(timer2);
+					timer3 = setInterval(endGame, 1000);
+				}
+			}
+
+			var choose = function(){
+				//reset the function
+				var i=0;
+				while (i<1){
+					//generate a number 1-8
+					rndnum = Math.floor(Math.random()*4);
+					//make sure the number is not a duplicate
+					if (rndnum != hold[0] && rndnum != hold[1] && rndnum != hold[2] && rndnum != hold[3]){
+						//exits the loop, we have a new random number
+						i++;
+						//returns the value
+						return rndnum;
+					}
+				}
+			}
+
+			var randomize = function(){
+				hold = [4,4,4,4];
+				hold[0] = choose();
+				hold[1] = choose();
+				hold[2] = choose();
+				hold[3] = choose();
+			}
+
+			var nextQuestion = function(){
+
+				$('.question').html(randomQuestion[currentQuestion].q);
+				
+
+				randomize();
+				correct = options[hold[0]];
+				wrong1 = options[hold[1]];
+				wrong2 = options[hold[2]];
+				wrong3 = options[hold[3]];
+
+				$(correct).html(randomQuestion[currentQuestion].c);
+				
+				$(wrong1).html(randomQuestion[currentQuestion].a2);
+				$(wrong2).html(randomQuestion[currentQuestion].a3);
+				$(wrong3).html(randomQuestion[currentQuestion].a4);			
+				
+				currentQuestion++;
+				answerSelect = false;
+
+			}
+
+			
+
+			$('.answer1').on('click', function(){
+				if (answerSelect){
+					return;
+				}
+				if (correct==='.answer1'){
+					$('.result').html("Correct!");
+					score++;
+				} else {
+					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				}
+				clearInterval(timer);
+				startTimerReset();
+				answerSelect = true;
+			});
+
+			$('.answer2').on('click', function(){
+				if (answerSelect){
+					return;
+				}
+				if (correct==='.answer2'){
+					$('.result').html("Correct!");
+					score++;
+				} else {
+					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				}
+				clearInterval(timer);
+				startTimerReset();
+				answerSelect = true;
+			});
+
+			$('.answer3').on('click', function(){
+				if (answerSelect){
+					return;
+				}
+				if (correct==='.answer3'){
+					$('.result').html("Correct!");
+					score++;
+				} else {
+					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				}
+				clearInterval(timer);
+				startTimerReset();
+				answerSelect = true;
+			});
+
+			$('.answer4').on('click', function(){
+				if (answerSelect){
+					return;
+				}
+				if (correct==='.answer4'){
+					$('.result').html("Correct!");
+					score++;
+				} else {
+					$('.result').html("Sorry, the correct answer was " + randomQuestion[currentQuestion-1].c + ".");
+				}
+				clearInterval(timer);
+				startTimerReset();
+				answerSelect = true;
+			});
+
+			$('body').on('click', function(){
+				if (gameStart){
+					startGame();
+				}
+				gameStart=false;
+			});
+
+			var endGame = function(){
+				$('.result').html("Game over, your score was " + score + " out of 10.");
+				clearInterval(timer3);
+			}
+		</script>
+	</body>
+</html>

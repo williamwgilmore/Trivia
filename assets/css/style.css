@@ -1,0 +1,10 @@
+body {
+	background: url('../images/pentagon.png');
+	font-family: 'Merriweather', serif;
+}
+
+.jumbotron {
+	background-color: transparent;
+	font-style: bold;
+	color: darkgreen;
+}
