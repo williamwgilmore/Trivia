@@ -344,6 +344,14 @@
 			var endGame = function(){
 				$('.result').html("Game over, your score was " + score + " out of 10.");
 				clearInterval(timer3);
+				$('.question').html("Click anywhere to begin again.");
+				$('.question1').html("");
+				$('.question2').html("");
+				$('.question3').html("");
+				$('.question4').html("");
+				gameStart=true;
+				score=0;
+				currentQuestion=0;
 			}
 		</script>
 	</body>
